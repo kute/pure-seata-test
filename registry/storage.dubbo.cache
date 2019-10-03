@@ -1,0 +1,3 @@
+#Dubbo Registry Cache
+#Thu Oct 03 15:45:27 CST 2019
+com.kute.seata.common.api.StorageService=empty\://192.168.31.182\:20883/com.kute.seata.common.api.StorageService?anyhost\=true&application\=pure-storage-service&bean.name\=ServiceBean\:com.kute.seata.common.api.StorageService&bind.ip\=192.168.31.182&bind.port\=20883&category\=configurators&check\=false&deprecated\=false&dubbo\=2.0.2&dynamic\=true&generic\=false&interface\=com.kute.seata.common.api.StorageService&methods\=decreaseStorage&organization\=kute&owner\=kute&pid\=1459&qos.enable\=false&register\=true&release\=2.7.3&side\=provider&timestamp\=1570088727206

@@ -1,0 +1,89 @@
+server:
+  port: 8082
+
+dubbo:
+  application:
+    id: ${spring.application.name}
+    name: ${spring.application.name}
+    organization: kute
+    owner: kute
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: 20882
+  scan:
+    base-packages: com.kute
+  # 多注册中心
+  registries:
+    zk:
+      address: zookeeper://localhost:2181
+      protocol: zookeeper
+      file: ./registry/order.dubbo.cache
+      group: kute/dubbo
+      default: true
+    nacos:
+      address: nacos://localhost:8848
+spring:
+  application:
+    name: pure-order-service
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/seata-test?zeroDateTimeBehavior=convertToNull&useUnicode=yes&characterEncoding=UTF8
+    username: root
+    password: root
+
+nacos:
+  # nacos配置中心：com.alibaba.boot.nacos.config.properties.NacosConfigProperties
+  config:
+    # 主 配置服务器地址
+    server-addr: 127.0.0.1:8848
+    bootstrap:
+      # 开启配置预加载功能
+      enable: true
+      log:
+        # 支持日志级别的加载时机
+        enable: true
+    data-id: pure.seata.order.config.yaml
+    # default value: DEFAULT_GROUP
+    group: pure-nacos-config-group
+    # com.alibaba.nacos.api.config.ConfigType
+    type: YAML
+    # 主动刷新配置
+    auto-refresh: true
+    # 失败重试时间
+    config-retry-time: 3000
+    config-long-poll-timeout: 46000
+    namespace: test
+
+  # 服务发现：com.alibaba.boot.nacos.discovery.properties.NacosDiscoveryProperties
+  # com.alibaba.boot.nacos.discovery.autoconfigure.NacosDiscoveryAutoRegister
+  discovery:
+    auto-register: true
+    server-addr: 127.0.0.1:8848
+    register:
+      serviceName: ${spring.application.name}
+      # 自定义属性
+      metadata:
+        appName: ${spring.application.name}
+    enabled: true
+    namespace: test
+
+order:
+  nacos:
+    config:
+      key1: value1
+      key2: value2
+      keylist:
+        - l1
+        - l2
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
